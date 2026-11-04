@@ -1,11 +1,35 @@
 (() => {
   "use strict";
 
+  // Theo "Phương pháp học văn": hiểu trước, nhớ sau; 3-5-1; tự nhắc không nhìn tài liệu;
+  // ôn cách quãng 1-3-7-14 ngày; checklist cuối buổi.
   const TOTAL = 12;
-  const PASS = 80;               // % trắc nghiệm cần đạt để tính là nắm được câu
-  const STORE = "chinhtri-progress-v2";
-  const WORDS_TARGET = 500;      // số chữ gợi ý khi viết 30 phút
-  const TABS = ["read", "quiz", "sort", "timer", "progress"];
+  const PASS = 80;               // % trắc nghiệm để hiện là "đạt" (không tính vào lịch ôn)
+  const STORE = "chinhtri-progress-v3";
+  const DAY_KEY = "chinhtri-day-v3";
+  const WORDS_TARGET = 500;
+  const GAPS = [1, 3, 7, 14];    // ngày chờ sau lần ôn 1, 2, 3, 4
+  const MASTER_REVIEWS = 5;      // ôn đủ 5 lần và lần cuối nhớ đủ thì coi là nhớ bền
+  const TABS = ["today", "read", "recall", "practice", "write", "progress"];
+
+  const PLAN = [
+    { t: "5 phút", s: "Đọc lại kiến thức và xác định phần chưa hiểu." },
+    { t: "10 phút", s: "Rút gọn thành 3 ý lớn, 5 từ khóa và 1 câu chốt (tab Học bài)." },
+    { t: "10 phút", s: "Đóng tài liệu, tự nói lại hoặc viết lại (tab Tự nhắc)." },
+    { t: "5 phút", s: "Kiểm tra cho quen, ghi phần còn thiếu và đánh dấu chỗ cần ôn lại." },
+  ];
+  const CHECK = [
+    "Tôi nói được tên và nội dung chính của bài.",
+    "Tôi nhớ được 3 ý lớn.",
+    "Tôi nhớ các từ khóa quan trọng.",
+    "Tôi tự giải thích được bằng lời của mình.",
+    "Tôi có ít nhất một dẫn chứng phù hợp.",
+    "Tôi viết được một đoạn theo MỞ - GIẢI - DẪN - PHÂN - CHỐT.",
+    "Tôi đã đánh dấu phần chưa chắc để ôn lại.",
+  ];
+  const KHUNG = [
+    ["MỞ", "mo"], ["GIẢI", "giai"], ["DẪN", "dan"], ["PHÂN", "phan"], ["CHỐT", "chot"],
+  ];
 
   const $ = (sel) => document.querySelector(sel);
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
@@ -18,8 +42,27 @@
     }
     return a;
   };
+  const countWords = (text) => {
+    const t = text.trim();
+    return t ? t.split(/\s+/).length : 0;
+  };
 
-  // ---------- Đọc file Markdown: chỉ lấy dàn ý và bài văn ----------
+  // ---------- Ngày (YYYY-MM-DD, theo giờ địa phương) ----------
+  const pad = (n) => String(n).padStart(2, "0");
+  const fmtDay = (d) => `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+  const dayStr = (off = 0) => {
+    const d = new Date();
+    d.setDate(d.getDate() + off);
+    return fmtDay(d);
+  };
+  const addDays = (s, n) => {
+    const d = new Date(s + "T00:00:00");
+    d.setDate(d.getDate() + n);
+    return fmtDay(d);
+  };
+  const fmtDM = (s) => `${s.slice(8, 10)}/${s.slice(5, 7)}`;
+
+  // ---------- Đọc Markdown: dàn ý và bài văn ----------
   function parseEssay(md, index) {
     const out = { index, number: index + 1, title: "", outline: [], body: [] };
     let section = "";
@@ -39,130 +82,239 @@
     return out;
   }
 
-  // ---------- Tiến độ lưu trên trình duyệt ----------
-  function loadProgress() {
-    try { return JSON.parse(localStorage.getItem(STORE)) || {}; } catch { return {}; }
+  // ---------- Lưu trữ ----------
+  function loadJSON(key, fallback) {
+    try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch { return fallback; }
   }
-  function saveProgress(p) {
-    try { localStorage.setItem(STORE, JSON.stringify(p)); } catch { /* bỏ qua nếu bị chặn */ }
+  function saveJSON(key, value) {
+    try { localStorage.setItem(key, JSON.stringify(value)); } catch { /* bỏ qua nếu bị chặn */ }
   }
-  let progress = loadProgress();
-  const rec = (i) => ({ quizBest: 0, quizTries: 0, sortDone: false, ...(progress[i] || {}) });
-  const mastered = (i) => rec(i).quizBest >= PASS && rec(i).sortDone;
-  function update(i, patch) {
-    progress[i] = { ...rec(i), ...patch };
-    saveProgress(progress);
+  let progress = loadJSON(STORE, {});
+  const saveProgress = () => saveJSON(STORE, progress);
+  const rec = (i) => ({ quizBest: 0, quizTries: 0, sortDone: false, reviews: [], ...(progress[i] || {}) });
+  const update = (i, patch) => { progress[i] = { ...rec(i), ...patch }; saveProgress(); };
+  const lastReview = (i) => { const rv = rec(i).reviews; return rv[rv.length - 1]; };
+
+  // Lịch ôn: sau lần nhớ đủ thứ n, chờ GAPS[n-1] ngày; quên hoặc nhớ một phần thì chờ 1 ngày.
+  function nextDue(i) {
+    const rv = rec(i).reviews;
+    if (!rv.length) return null;
+    const last = rv[rv.length - 1];
+    const gap = last.r === "nho" ? GAPS[Math.min(rv.length - 1, GAPS.length - 1)] : 1;
+    return addDays(last.d, gap);
   }
+  function status(i) {
+    const rv = rec(i).reviews;
+    if (!rv.length) return "new";
+    if (rv.length >= MASTER_REVIEWS && lastReview(i).r === "nho") return "mastered";
+    return nextDue(i) <= dayStr(0) ? "due" : "later";
+  }
+  const addReview = (i, r) => update(i, { reviews: [...rec(i).reviews, { d: dayStr(0), r }] });
+
+  // Checklist và kế hoạch theo từng ngày
+  function loadDay() {
+    const today = dayStr(0);
+    const d = loadJSON(DAY_KEY, null);
+    if (!d || d.date !== today) return { date: today, plan: {}, check: {} };
+    return d;
+  }
+  let day = loadDay();
+  const saveDay = () => saveJSON(DAY_KEY, day);
 
   // ---------- Trạng thái ----------
   const state = {
     essays: [],
+    study: [],
     quizData: [],
     current: 0,
-    tab: "read",
+    tab: "today",
     showFull: false,
-    order: {},      // sắp xếp: câu -> thứ tự hiện tại của các mục dàn ý
-    quiz: {},       // trắc nghiệm: câu -> đáp án đã chọn và thứ tự đáp án đã xáo
+    hints: {},          // câu -> số từ khóa đã gợi ý
+    revealed: {},       // câu -> đã xem đáp án
+    sub: "quiz",        // luyện hiểu: quiz | sort
+    quiz: {},           // câu -> trạng thái trắc nghiệm
+    order: {},          // câu -> thứ tự mục dàn ý khi sắp xếp
+    sortChecked: null,
+    drafts: {},
     timer: null,
     remaining: 30 * 60,
     running: false,
-    drafts: {},
   };
 
   async function loadAll() {
-    const files = Array.from({ length: TOTAL }, (_, i) => `content/cau-${String(i + 1).padStart(2, "0")}.md`);
-    const [texts, quiz] = await Promise.all([
+    const files = Array.from({ length: TOTAL }, (_, i) => `content/cau-${pad(i + 1)}.md`);
+    const [texts, study, quiz] = await Promise.all([
       Promise.all(files.map((f) => fetch(f).then((r) => {
         if (!r.ok) throw new Error(`Không đọc được ${f}`);
         return r.text();
       }))),
-      fetch("content/quiz.json").then((r) => {
-        if (!r.ok) throw new Error("Không đọc được content/quiz.json");
-        return r.json();
-      }),
+      fetch("content/study.json").then((r) => r.json()),
+      fetch("content/quiz.json").then((r) => r.json()),
     ]);
     state.essays = texts.map((t, i) => parseEssay(t, i));
+    state.study = study;
     state.quizData = quiz;
   }
 
-  function quizFor(i) {
-    return state.quizData.find((x) => x.id === i + 1);
-  }
+  const studyFor = (i) => state.study.find((x) => x.id === i + 1);
+  const quizFor = (i) => state.quizData.find((x) => x.id === i + 1);
 
-  function newQuiz(i) {
-    const qs = quizFor(i).questions;
-    return {
-      perm: qs.map((q) => shuffle(q.options.map((_, k) => k))),
-      ans: qs.map(() => null),
-      submitted: false,
-      score: 0,
-    };
-  }
-  function quizState(i) {
-    if (!state.quiz[i]) state.quiz[i] = newQuiz(i);
-    return state.quiz[i];
-  }
-
-  function sortState(i) {
-    if (!state.order[i]) state.order[i] = shuffle(state.essays[i].outline.map((_, k) => k));
-    return state.order[i];
-  }
-
-  // ---------- Danh sách và tổng quan ----------
-  function statusClass(i) {
-    if (mastered(i)) return ["ok", "Đạt"];
-    if (rec(i).quizBest > 0) return ["mid", `${rec(i).quizBest}%`];
-    return ["bad", "Chưa"];
-  }
+  // ---------- Danh sách và đầu trang ----------
+  const BADGE = {
+    mastered: ["ok", "Nhớ bền"],
+    due: ["mid", "Đến hạn"],
+    later: ["", ""],
+    new: ["", "Mới"],
+  };
 
   function renderList() {
     $("#list").innerHTML = state.essays.map((e) => {
-      const [cls, txt] = statusClass(e.index);
+      const st = status(e.index);
+      let [cls, txt] = BADGE[st];
+      if (st === "later") txt = fmtDM(nextDue(e.index));
       return `<button class="qbtn ${e.index === state.current ? "active" : ""}" data-i="${e.index}">
         <span>${e.number}. ${esc(titleOf(e))}</span><span class="badge ${cls}">${txt}</span></button>`;
     }).join("");
-    const done = state.essays.filter((e) => mastered(e.index)).length;
-    $("#overall").textContent = `Đã nắm ${done} trên ${TOTAL} câu.`;
-    $("#ticks").innerHTML = state.essays.map((e) => `<span class="${mastered(e.index) ? "on" : ""}" title="Câu ${e.number}"></span>`).join("");
+    const due = state.essays.filter((e) => ["new", "due"].includes(status(e.index))).length;
+    const nhoBen = state.essays.filter((e) => status(e.index) === "mastered").length;
+    $("#overall").textContent = `Đến hạn hôm nay: ${due} câu. Nhớ bền: ${nhoBen} trên ${TOTAL} câu.`;
+    $("#ticks").innerHTML = state.essays.map((e) => `<span class="${status(e.index) === "mastered" ? "on" : ""}" title="Câu ${e.number}"></span>`).join("");
   }
 
-  function bodyHTML(e) {
-    return e.body.map((b) => (b.heading ? `<h3>${esc(b.heading)}</h3>` : `<p>${esc(b.text)}</p>`)).join("");
+  const bodyHTML = (e) => e.body.map((b) => (b.heading ? `<h3>${esc(b.heading)}</h3>` : `<p>${esc(b.text)}</p>`)).join("");
+
+  // ---------- Hôm nay ----------
+  function renderToday() {
+    const due = state.essays.filter((e) => ["new", "due"].includes(status(e.index)));
+    $("#tab-today").innerHTML = `
+      <div class="card">
+        <h2>Hôm nay</h2>
+        <p class="meta">${due.length ? `Có ${due.length} câu cần ôn hôm nay.` : "Hôm nay không có câu nào đến hạn."} Dự kiến 30 phút.</p>
+        ${due.length ? `<ul class="duelist">${due.map((e) => `
+          <li><button class="linkbtn" data-goto="${e.index}">${e.number}. ${esc(titleOf(e))}</button>
+          <span class="meta">${status(e.index) === "new" ? "Học lần đầu" : "Đến hạn"}</span></li>`).join("")}</ul>` : ""}
+      </div>
+      <div class="card">
+        <h3>Kế hoạch 30 phút</h3>
+        <ol class="plan">${PLAN.map((p, k) => `
+          <li><label class="check"><input type="checkbox" data-plan="${k}" ${day.plan[k] ? "checked" : ""}>
+          <span><b>${p.t}.</b> ${p.s}</span></label></li>`).join("")}</ol>
+      </div>
+      <div class="card">
+        <h3>Checklist cuối buổi</h3>
+        <ul class="checklist">${CHECK.map((c, k) => `
+          <li><label class="check"><input type="checkbox" data-check="${k}" ${day.check[k] ? "checked" : ""}>
+          <span>${c}</span></label></li>`).join("")}</ul>
+      </div>`;
   }
 
-  // ---------- Tab 1: Dàn ý và bài văn ----------
+  // ---------- Học bài: thẻ 3-5-1 và dàn ý ----------
   function renderRead() {
     const e = state.essays[state.current];
+    const st = studyFor(state.current);
     $("#tab-read").innerHTML = `
       <div class="card">
         <h2>${esc(e.title)}</h2>
-        <p class="meta">Bài rút gọn, khoảng ${WORDS_TARGET} chữ. Bài này có ${e.words} chữ.</p>
+        <p class="meta">Hiểu trước, nhớ sau. Đọc phần 3-5-1 và dàn ý, không cần học thuộc cả bài.</p>
+        <div class="s351">
+          <h3>3 ý lớn</h3>
+          <ol class="big">${st.big.map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
+          <h3>5 từ khóa</h3>
+          <div class="chips">${st.keys.map((x) => `<span class="chip">${esc(x)}</span>`).join("")}</div>
+          <h3>1 câu chốt</h3>
+          <p class="chot">${esc(st.chot)}</p>
+        </div>
         <h3>Dàn ý</h3>
         <ol class="outline">${e.outline.map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
         <div class="controls">
+          <button class="btn primary" data-go="recall">Tự nhắc câu này</button>
+          <button class="btn" data-go="write">Viết theo khung</button>
           <button class="btn" id="toggleFull">${state.showFull ? "Ẩn bài đầy đủ" : "Xem bài đầy đủ"}</button>
-          <button class="btn" data-go="sort">Sắp xếp dàn ý</button>
-          <button class="btn primary" data-go="quiz">Làm trắc nghiệm</button>
         </div>
       </div>
-      <div class="card essay ${state.showFull ? "" : "hidden"}" id="full">${bodyHTML(e)}</div>`;
+      <div class="card essay ${state.showFull ? "" : "hidden"}">${bodyHTML(e)}</div>
+      <p class="meta">Bài rút gọn, khoảng ${WORDS_TARGET} chữ. Bài này có ${e.words} chữ.</p>`;
     $("#toggleFull").onclick = () => { state.showFull = !state.showFull; renderRead(); };
-    document.querySelectorAll("#tab-read [data-go]").forEach((b) => {
-      b.onclick = () => setTab(b.dataset.go);
-    });
   }
 
-  // ---------- Tab 2: Trắc nghiệm ----------
-  function renderQuiz() {
+  // ---------- Tự nhắc: nhìn không tài liệu, rồi mới xem đáp án ----------
+  function nextText(i) {
+    const s = status(i);
+    if (s === "new") return "Chưa ôn lần nào.";
+    if (s === "mastered") return "Đã ôn đủ, nhớ bền.";
+    return `Lần ôn tiếp theo: ${fmtDM(nextDue(i))}.`;
+  }
+
+  function renderRecall() {
     const i = state.current;
     const e = state.essays[i];
+    const st = studyFor(i);
+    const hintN = state.hints[i] || 0;
+    const shown = state.revealed[i];
+    const key = "r" + i;
+    $("#tab-recall").innerHTML = `
+      <div class="card">
+        <h2>Tự nhắc: ${esc(titleOf(e))}</h2>
+        <p class="meta">Đóng tài liệu. Tự nói lại hoặc viết lại 3 ý lớn, 5 từ khóa và 1 câu chốt. Nếu quên, thử nhớ lại từ khóa trước. Chỉ mở đáp án khi đã cố nhớ.</p>
+        <textarea id="recallText" placeholder="Viết những gì bạn nhớ được (không bắt buộc)"></textarea>
+        <div class="controls">
+          <button class="btn" id="hint" ${hintN >= st.keys.length || shown ? "disabled" : ""}>Gợi ý một từ khóa</button>
+          <button class="btn primary" id="reveal" ${shown ? "disabled" : ""}>Xem đáp án</button>
+        </div>
+        ${hintN ? `<p class="hintline">Từ khóa gợi ý: ${st.keys.slice(0, hintN).map(esc).join(", ")}</p>` : ""}
+        ${shown ? `
+          <div class="s351 answer">
+            <h3>3 ý lớn</h3>
+            <ol class="big">${st.big.map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
+            <h3>5 từ khóa</h3>
+            <div class="chips">${st.keys.map((x) => `<span class="chip">${esc(x)}</span>`).join("")}</div>
+            <h3>1 câu chốt</h3>
+            <p class="chot">${esc(st.chot)}</p>
+          </div>
+          <h3>Tự đánh giá</h3>
+          <p class="meta">Chọn đúng mức bạn nhớ. Quên hoặc nhớ một phần thì ngày mai ôn lại.</p>
+          <div class="controls">
+            <button class="btn primary" data-rate="nho">Nhớ đủ</button>
+            <button class="btn" data-rate="mot_phan">Nhớ một phần</button>
+            <button class="btn danger" data-rate="quen">Quên</button>
+          </div>` : ""}
+        <p class="meta">Đã ôn ${rec(i).reviews.length} lần. ${nextText(i)}</p>
+      </div>`;
+    const ta = $("#recallText");
+    ta.value = state.drafts[key] || "";
+    ta.oninput = () => { state.drafts[key] = ta.value; };
+  }
+
+  // ---------- Luyện hiểu: trắc nghiệm và sắp xếp (không tính vào lịch ôn) ----------
+  function renderPractice() {
+    const sub = state.sub;
+    const head = `
+      <div class="subtabs">
+        <button data-sub="quiz" class="${sub === "quiz" ? "active" : ""}">Trắc nghiệm</button>
+        <button data-sub="sort" class="${sub === "sort" ? "active" : ""}">Sắp xếp dàn ý</button>
+      </div>
+      <p class="meta">Dùng để kiểm tra hiểu thêm. Kết quả không thay đổi lịch ôn.</p>`;
+    $("#tab-practice").innerHTML = head + (sub === "quiz" ? quizHTML() : sortHTML());
+  }
+
+  function quizState(i) {
+    if (!state.quiz[i]) {
+      const qs = quizFor(i).questions;
+      state.quiz[i] = {
+        perm: qs.map((q) => shuffle(q.options.map((_, k) => k))),
+        ans: qs.map(() => null),
+        submitted: false,
+        score: 0,
+      };
+    }
+    return state.quiz[i];
+  }
+
+  function quizHTML() {
+    const i = state.current;
     const data = quizFor(i);
     const qz = quizState(i);
     const r = rec(i);
-    if (!data) {
-      $("#tab-quiz").innerHTML = `<div class="card"><p class="meta">Chưa có câu hỏi cho bài này.</p></div>`;
-      return;
-    }
     const items = data.questions.map((q, qi) => {
       const opts = qz.perm[qi].map((orig) => {
         let cls = "";
@@ -180,10 +332,10 @@
       return `<fieldset class="q"><legend><span class="qn">${qi + 1}.</span> ${esc(q.q)}</legend>${opts}${why}</fieldset>`;
     }).join("");
     const answered = qz.ans.filter((a) => a !== null).length;
-    $("#tab-quiz").innerHTML = `
+    return `
       <div class="card">
-        <h2>Trắc nghiệm: ${esc(titleOf(e))}</h2>
-        <p class="meta">Mỗi câu có một đáp án đúng. Thứ tự đáp án được xáo mỗi lần làm, nên không thể nhớ theo vị trí. Cần đúng ${PASS}% trở lên. Lần tốt nhất: ${r.quizBest}%. Đã làm: ${r.quizTries} lần.</p>
+        <h2>Trắc nghiệm: ${esc(titleOf(state.essays[i]))}</h2>
+        <p class="meta">Thứ tự đáp án được xáo mỗi lần làm. Lần tốt nhất: ${r.quizBest}%. Đã làm: ${r.quizTries} lần.</p>
         <form id="quizForm" class="quiz">${items}</form>
         <div class="controls">
           ${qz.submitted
@@ -206,8 +358,12 @@
     renderAll();
   }
 
-  // ---------- Tab 3: Sắp xếp dàn ý ----------
-  function renderSort() {
+  function sortState(i) {
+    if (!state.order[i]) state.order[i] = shuffle(state.essays[i].outline.map((_, k) => k));
+    return state.order[i];
+  }
+
+  function sortHTML() {
     const i = state.current;
     const e = state.essays[i];
     const order = sortState(i);
@@ -219,24 +375,24 @@
           <button class="btn sm" data-act="down" data-pos="${pos}" ${pos === order.length - 1 ? "disabled" : ""}>Xuống</button>
         </span>
       </li>`).join("");
-    $("#tab-sort").innerHTML = `
+    let result = "";
+    if (state.sortChecked && state.sortChecked.i === i) {
+      const { wrong } = state.sortChecked;
+      result = wrong.length
+        ? `<p class="score bad">Chưa đúng</p><p class="meta">Các vị trí chưa đúng: ${wrong.join(", ")}.</p>`
+        : `<p class="score ok">Đúng thứ tự</p>`;
+    }
+    return `
       <div class="card">
         <h2>Sắp xếp dàn ý: ${esc(titleOf(e))}</h2>
-        <p class="meta">Các mục đang bị xáo trộn. Kéo thả từng mục, hoặc chọn nút Lên, Xuống để xếp lại theo đúng thứ tự dàn ý. Khi xong, bấm Kiểm tra thứ tự.</p>
+        <p class="meta">Kéo thả từng mục, hoặc dùng nút Lên, Xuống để xếp đúng thứ tự dàn ý.</p>
         <ul class="sortlist" id="sortlist">${items}</ul>
         <div class="controls">
           <button class="btn primary" id="checkSort">Kiểm tra thứ tự</button>
           <button class="btn" id="reshuffle">Xáo lại</button>
         </div>
-        <div id="sortResult">${sortResultHTML(i)}</div>
+        <div id="sortResult">${result}</div>
       </div>`;
-  }
-
-  function sortResultHTML(i) {
-    if (!state.sortChecked || state.sortChecked.i !== i) return "";
-    const { wrong } = state.sortChecked;
-    if (!wrong.length) return `<p class="score ok">Đúng thứ tự</p><p class="meta">Đã ghi nhận cho câu này.</p>`;
-    return `<p class="score bad">Chưa đúng</p><p class="meta">Các vị trí chưa đúng: ${wrong.join(", ")}.</p>`;
   }
 
   function moveItem(pos, delta) {
@@ -245,7 +401,7 @@
     if (target < 0 || target >= order.length) return;
     [order[pos], order[target]] = [order[target], order[pos]];
     state.sortChecked = null;
-    renderSort();
+    renderPractice();
     const act = delta < 0 ? "up" : "down";
     const btn = document.querySelector(`#sortlist [data-act="${act}"][data-pos="${target}"]`);
     if (btn && !btn.disabled) btn.focus();
@@ -257,46 +413,46 @@
     const [item] = order.splice(from, 1);
     order.splice(to, 0, item);
     state.sortChecked = null;
-    renderSort();
+    renderPractice();
   }
 
   function checkSort() {
-    const i = state.current;
-    const order = sortState(i);
+    const order = sortState(state.current);
     const wrong = order.map((k, pos) => (k !== pos ? pos + 1 : null)).filter((x) => x !== null);
-    state.sortChecked = { i, wrong };
-    if (!wrong.length) update(i, { sortDone: true });
-    renderSort();
-    if (wrong.length) {
-      const el = $("#sortResult");
-      if (el) el.scrollIntoView({ block: "nearest" });
-    }
+    state.sortChecked = { i: state.current, wrong };
+    if (!wrong.length) update(state.current, { sortDone: true });
+    renderPractice();
   }
 
-  // ---------- Tab 4: Đồng hồ 30 phút ----------
-  function fmt(sec) {
-    const m = Math.floor(sec / 60).toString().padStart(2, "0");
-    const s = (sec % 60).toString().padStart(2, "0");
-    return `${m}:${s}`;
-  }
+  // ---------- Viết theo khung + đồng hồ 30 phút ----------
+  const fmt = (sec) => `${pad(Math.floor(sec / 60))}:${pad(sec % 60)}`;
 
-  function renderTimer() {
-    const e = state.essays[state.current];
-    $("#tab-timer").innerHTML = `
+  function renderWrite() {
+    const i = state.current;
+    const e = state.essays[i];
+    const st = studyFor(i);
+    const key = "w" + i;
+    $("#tab-write").innerHTML = `
       <div class="card">
-        <h2>Viết thử đúng thời lượng thi: ${esc(titleOf(e))}</h2>
+        <h2>Viết thử: ${esc(titleOf(e))}</h2>
         <p class="meta">Viết không xem bài gốc. Mục tiêu khoảng ${WORDS_TARGET} chữ trong 30 phút.</p>
         <div class="timer" id="clock">${fmt(state.remaining)}</div>
         <div class="controls">
           <button class="btn primary" id="start">${state.running ? "Tạm dừng" : "Bắt đầu"}</button>
           <button class="btn" id="reset">Đặt lại 30:00</button>
         </div>
-        <textarea id="ta2" placeholder="Viết bài tại đây..."></textarea>
-        <p class="meta"><span id="wc2">${countWords(state.drafts.timer || "")}</span> / ${WORDS_TARGET} chữ</p>
+      </div>
+      <div class="card">
+        <h3>Khung đoạn văn</h3>
+        <ol class="khung">${KHUNG.map(([label, k]) => `
+          <li><span class="klabel">${label}</span><span>${esc(st.khung[k])}</span></li>`).join("")}</ol>
+        <p class="meta">Dẫn chứng phải liên quan trực tiếp đến luận điểm. Không thêm chi tiết bạn không chắc.</p>
+        <textarea id="writeText" placeholder="Viết đoạn văn theo khung tại đây"></textarea>
+        <p class="meta"><span id="wc2">${countWords(state.drafts[key] || "")}</span> chữ</p>
       </div>`;
-    const ta2 = $("#ta2");
-    ta2.value = state.drafts.timer || "";
-    ta2.oninput = () => { state.drafts.timer = ta2.value; $("#wc2").textContent = countWords(ta2.value); };
+    const ta = $("#writeText");
+    ta.value = state.drafts[key] || "";
+    ta.oninput = () => { state.drafts[key] = ta.value; $("#wc2").textContent = countWords(ta.value); };
     $("#start").onclick = toggleTimer;
     $("#reset").onclick = () => {
       stopTimer();
@@ -304,11 +460,6 @@
       $("#clock").textContent = fmt(state.remaining);
       $("#start").textContent = "Bắt đầu";
     };
-  }
-
-  function countWords(text) {
-    const t = text.trim();
-    return t ? t.split(/\s+/).length : 0;
   }
 
   function toggleTimer() {
@@ -335,45 +486,39 @@
     state.running = false;
   }
 
-  // ---------- Tab 5: Tiến độ ----------
+  // ---------- Tiến độ ----------
   function renderProgress() {
     const rows = state.essays.map((e) => {
       const r = rec(e.index);
+      const st = status(e.index);
       return `<tr>
         <td>${e.number}</td>
         <td>${esc(titleOf(e))}</td>
+        <td>${st === "mastered" ? "Nhớ bền" : st === "new" ? "Chưa ôn" : st === "due" ? "Đến hạn" : "Đang ôn"}</td>
+        <td>${r.reviews.length}</td>
+        <td>${st === "new" ? "" : st === "mastered" ? "" : st === "due" ? "Hôm nay" : fmtDM(nextDue(e.index))}</td>
         <td>${r.quizBest ? r.quizBest + "%" : "Chưa làm"}</td>
-        <td>${r.quizTries}</td>
-        <td>${r.sortDone ? "Đúng" : "Chưa"}</td>
-        <td><span class="badge ${mastered(e.index) ? "ok" : "bad"}">${mastered(e.index) ? "Đạt" : "Chưa đạt"}</span></td>
       </tr>`;
     }).join("");
-    const todo = state.essays.filter((e) => !mastered(e.index)).map((e) => e.index);
+    const dueFirst = state.essays.find((e) => ["new", "due"].includes(status(e.index)));
     $("#tab-progress").innerHTML = `
       <div class="card">
-        <h2>Tiến độ</h2>
-        <p class="meta">Một câu được tính là đạt khi làm trắc nghiệm được ${PASS}% trở lên và xếp đúng thứ tự dàn ý.</p>
+        <h2>Tiến độ ôn</h2>
+        <p class="meta">Một câu được coi là nhớ bền khi đã ôn đủ ${MASTER_REVIEWS} lần cách quãng và lần cuối nhớ đủ. Lịch: 1, 3, 7, 14 ngày.</p>
         <table>
-          <thead><tr><th>#</th><th>Nội dung</th><th>Trắc nghiệm tốt nhất</th><th>Số lần làm</th><th>Sắp xếp dàn ý</th><th>Kết quả</th></tr></thead>
+          <thead><tr><th>#</th><th>Nội dung</th><th>Trạng thái</th><th>Số lần ôn</th><th>Ôn tiếp</th><th>Trắc nghiệm tốt nhất</th></tr></thead>
           <tbody>${rows}</tbody>
         </table>
         <div class="controls">
-          <button class="btn primary" id="goWeak" ${todo.length ? "" : "disabled"}>Ôn câu chưa đạt (${todo.length})</button>
-          <button class="btn" id="randomWeak" ${todo.length ? "" : "disabled"}>Ngẫu nhiên một câu chưa đạt</button>
+          <button class="btn primary" id="goDue" ${dueFirst ? "" : "disabled"}>Ôn câu đến hạn đầu tiên</button>
           <button class="btn danger" id="resetProgress">Xóa toàn bộ tiến độ</button>
         </div>
-        <p class="meta">${todo.length ? "Chưa đủ 12 câu đạt." : "Đã đạt cả 12 câu."}</p>
       </div>`;
-    $("#goWeak").onclick = () => { if (todo.length) { state.current = todo[0]; setTab("quiz"); } };
-    $("#randomWeak").onclick = () => {
-      if (!todo.length) return;
-      state.current = todo[Math.floor(Math.random() * todo.length)];
-      setTab("quiz");
-    };
+    $("#goDue").onclick = () => { if (dueFirst) { state.current = dueFirst.index; setTab("recall"); } };
     $("#resetProgress").onclick = () => {
       if (confirm("Xóa toàn bộ tiến độ trên trình duyệt này?")) {
         progress = {};
-        saveProgress(progress);
+        saveProgress();
         renderAll();
       }
     };
@@ -389,14 +534,15 @@
 
   function renderAll() {
     renderList();
+    if (state.tab === "today") renderToday();
     if (state.tab === "read") renderRead();
-    if (state.tab === "quiz") renderQuiz();
-    if (state.tab === "sort") renderSort();
-    if (state.tab === "timer") renderTimer();
+    if (state.tab === "recall") renderRecall();
+    if (state.tab === "practice") renderPractice();
+    if (state.tab === "write") renderWrite();
     if (state.tab === "progress") renderProgress();
   }
 
-  // Sự kiện: danh sách câu, tab
+  // Danh sách câu và tab
   document.addEventListener("click", (ev) => {
     const q = ev.target.closest(".qbtn");
     if (q) {
@@ -408,46 +554,80 @@
     }
     const t = ev.target.closest(".tabs button");
     if (t) setTab(t.dataset.tab);
+    const go = ev.target.closest("[data-go]");
+    if (go) setTab(go.dataset.go);
   });
 
-  // Sự kiện: trắc nghiệm
-  $("#tab-quiz").addEventListener("change", (ev) => {
-    if (ev.target.matches('input[type="radio"]')) {
-      const qi = Number(ev.target.name.slice(1));
-      quizState(state.current).ans[qi] = Number(ev.target.value);
-      renderQuiz();
-    }
+  // Hôm nay: kế hoạch, checklist, mở câu
+  $("#tab-today").addEventListener("change", (ev) => {
+    const p = ev.target.dataset.plan;
+    const c = ev.target.dataset.check;
+    if (p !== undefined) day.plan[p] = ev.target.checked;
+    if (c !== undefined) day.check[c] = ev.target.checked;
+    saveDay();
   });
-  $("#tab-quiz").addEventListener("click", (ev) => {
-    if (ev.target.closest("#submitQuiz")) submitQuiz();
-    if (ev.target.closest("#retry")) {
-      state.quiz[state.current] = newQuiz(state.current);
+  $("#tab-today").addEventListener("click", (ev) => {
+    const b = ev.target.closest("[data-goto]");
+    if (b) { state.current = Number(b.dataset.goto); setTab("recall"); }
+  });
+
+  // Tự nhắc: gợi ý, xem đáp án, tự đánh giá
+  $("#tab-recall").addEventListener("click", (ev) => {
+    const i = state.current;
+    if (ev.target.closest("#hint")) {
+      state.hints[i] = Math.min((state.hints[i] || 0) + 1, studyFor(i).keys.length);
+      renderRecall();
+    }
+    if (ev.target.closest("#reveal")) {
+      state.revealed[i] = true;
+      renderRecall();
+    }
+    const rate = ev.target.closest("[data-rate]");
+    if (rate) {
+      addReview(i, rate.dataset.rate);
+      state.revealed[i] = false;
+      state.hints[i] = 0;
       renderAll();
     }
   });
 
-  // Sự kiện: sắp xếp (nút và kéo thả)
-  const sortBox = $("#tab-sort");
-  sortBox.addEventListener("click", (ev) => {
+  // Luyện hiểu: chuyển tab con, trắc nghiệm, sắp xếp
+  const practice = $("#tab-practice");
+  practice.addEventListener("click", (ev) => {
+    const sub = ev.target.closest("[data-sub]");
+    if (sub) { state.sub = sub.dataset.sub; renderPractice(); return; }
+    if (ev.target.closest("#submitQuiz")) { submitQuiz(); return; }
+    if (ev.target.closest("#retry")) {
+      delete state.quiz[state.current];
+      renderPractice();
+      return;
+    }
     const b = ev.target.closest("button[data-act]");
     if (b) { moveItem(Number(b.dataset.pos), b.dataset.act === "up" ? -1 : 1); return; }
-    if (ev.target.closest("#checkSort")) checkSort();
+    if (ev.target.closest("#checkSort")) { checkSort(); return; }
     if (ev.target.closest("#reshuffle")) {
       delete state.order[state.current];
       state.sortChecked = null;
-      renderSort();
+      renderPractice();
     }
   });
-  sortBox.addEventListener("dragstart", (ev) => {
+  practice.addEventListener("change", (ev) => {
+    if (ev.target.matches('input[type="radio"]')) {
+      const qi = Number(ev.target.name.slice(1));
+      quizState(state.current).ans[qi] = Number(ev.target.value);
+      renderPractice();
+    }
+  });
+  practice.addEventListener("dragstart", (ev) => {
     const li = ev.target.closest(".sort-item");
     if (!li) return;
     ev.dataTransfer.setData("text/plain", li.dataset.pos);
     ev.dataTransfer.effectAllowed = "move";
   });
-  sortBox.addEventListener("dragover", (ev) => {
+  practice.addEventListener("dragover", (ev) => {
     if (ev.target.closest(".sort-item")) ev.preventDefault();
   });
-  sortBox.addEventListener("drop", (ev) => {
+  practice.addEventListener("drop", (ev) => {
     const li = ev.target.closest(".sort-item");
     if (!li) return;
     ev.preventDefault();
@@ -458,6 +638,6 @@
   loadAll()
     .then(renderAll)
     .catch((err) => {
-      $("#tab-read").innerHTML = `<div class="card">Lỗi tải nội dung: ${esc(err.message || err)}. Hãy mở trang qua máy chủ (ví dụ Vercel), không mở trực tiếp file.</div>`;
+      $("#tab-today").innerHTML = `<div class="card">Lỗi tải nội dung: ${esc(err.message || err)}. Hãy mở trang qua máy chủ (ví dụ Vercel), không mở trực tiếp file.</div>`;
     });
 })();

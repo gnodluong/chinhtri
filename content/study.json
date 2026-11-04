@@ -1,0 +1,158 @@
+[
+  {
+    "id": 1,
+    "big": ["Tự nhiên là tiền đề và môi trường tồn tại của xã hội", "Xã hội tác động trở lại tự nhiên bằng lao động có ý thức", "Phát triển phải đi cùng bảo vệ môi trường"],
+    "keys": ["tự nhiên", "tiền đề", "lao động có mục đích", "hậu quả quay trở lại", "tiết kiệm"],
+    "chot": "Tự nhiên là điều kiện khách quan, còn xã hội tác động trở lại tự nhiên bằng hoạt động có ý thức.",
+    "khung": {
+      "mo": "Con người vừa là sản phẩm của tự nhiên vừa tạo nên xã hội. Vấn đề cần bàn là ...",
+      "giai": "Tự nhiên theo nghĩa hẹp là ... Xã hội là ...",
+      "dan": "Ví dụ: vụ mùa bị hạn, hoặc khai thác nước bừa bãi.",
+      "phan": "Ví dụ này cho thấy ... vì ...",
+      "chot": "Vì vậy, làm đúng quy luật và bảo vệ môi trường là ..."
+    }
+  },
+  {
+    "id": 2,
+    "big": ["Đạo đức là gốc, đức đi cùng tài", "Yêu thương con người bằng hành động cụ thể", "Nghiêm với mình, rộng với người, không bao che"],
+    "keys": ["đạo đức là gốc", "cả đức lẫn tài", "hành động cụ thể", "rộng lượng không bao che", "công bằng kỷ luật"],
+    "chot": "Yêu thương con người là biểu hiện cao đẹp của đạo đức cách mạng, thể hiện bằng hành động có nguyên tắc.",
+    "khung": {
+      "mo": "Đạo đức cách mạng là nền tảng của người làm việc vì nước, vì dân. Yêu thương con người là ...",
+      "giai": "Yêu thương con người là hướng tới người lao động, người chịu khổ, người cần giúp đỡ.",
+      "dan": "Ví dụ: chia sẻ công việc với đồng đội đang ốm.",
+      "phan": "Hành động này cho thấy ... vì tình thương phải đi cùng ...",
+      "chot": "Thương người bằng hành động có nguyên tắc là cách xây dựng tập thể đoàn kết."
+    }
+  },
+  {
+    "id": 3,
+    "big": ["Tám đặc trưng nêu trong Cương lĩnh 2011", "Do nhân dân làm chủ là đặc trưng xác định chủ thể", "Nhà nước của dân, do dân, vì dân"],
+    "keys": ["dân giàu nước mạnh", "do nhân dân làm chủ", "pháp quyền xã hội chủ nghĩa", "văn hóa tiên tiến", "hữu nghị và hợp tác"],
+    "chot": "Tám đặc trưng cho thấy mục tiêu, điều kiện và chủ thể của xây dựng xã hội xã hội chủ nghĩa Việt Nam.",
+    "khung": {
+      "mo": "Cương lĩnh 2011 xác định tám đặc trưng của xã hội xã hội chủ nghĩa Việt Nam. Trong đó ...",
+      "giai": "Do nhân dân làm chủ nghĩa là nhân dân tham gia quyết định, giám sát và xây dựng cuộc sống chung.",
+      "dan": "Ví dụ: góp ý đúng quy định trong đơn vị, lắng nghe và tôn trọng quyết định chung.",
+      "phan": "Điều này cho thấy ... vì quyền làm chủ đi cùng trách nhiệm ...",
+      "chot": "Do đó, phát huy dân chủ phải gắn với kỷ cương và tôn trọng pháp luật."
+    }
+  },
+  {
+    "id": 4,
+    "big": ["Trung với nước là bảo vệ độc lập, chủ quyền, lãnh thổ", "Hiếu với dân là tôn trọng, lắng nghe, không gây phiền hà", "Hai vế thống nhất và thể hiện trong quân đội"],
+    "keys": ["độc lập chủ quyền", "trung với Đảng", "hiếu với dân", "nói đi đôi với làm", "giúp dân đúng chức trách"],
+    "chot": "Trung với nước, hiếu với dân là hai mặt thống nhất của đạo đức cách mạng, giữ vững qua việc nhỏ hằng ngày.",
+    "khung": {
+      "mo": "Trung với nước, hiếu với dân là phẩm chất hàng đầu trong đạo đức cách mạng. Cần hiểu ...",
+      "giai": "Trung với nước là ... Hiếu với dân là ...",
+      "dan": "Ví dụ: đơn vị giúp dân trong thiên tai, hoặc việc giữ bí mật, bảo quản tài sản chung.",
+      "phan": "Ví dụ này cho thấy hai vế thống nhất vì ...",
+      "chot": "Vì vậy, yêu nước phải đi cùng thương dân và làm tròn trách nhiệm."
+    }
+  },
+  {
+    "id": 5,
+    "big": ["Pháp luật là quy tắc xử sự chung do Nhà nước ban hành hoặc thừa nhận", "Các đặc trưng: ý chí nhà nước, bắt buộc chung, phổ biến, hệ thống, hình thức, xã hội", "Ba chức năng: điều chỉnh, bảo vệ, giáo dục"],
+    "keys": ["ý chí nhà nước", "quy phạm phổ biến", "tính hệ thống", "bảo vệ quyền lợi", "giáo dục tự giác"],
+    "chot": "Pháp luật điều chỉnh hành vi, bảo vệ quyền lợi và giáo dục ý thức tuân thủ; hiểu đúng để làm đúng.",
+    "khung": {
+      "mo": "Pháp luật là công cụ xác định khuôn khổ xử sự trong đời sống. Cần hiểu ...",
+      "giai": "Pháp luật là hệ thống quy tắc xử sự chung do Nhà nước ban hành hoặc thừa nhận.",
+      "dan": "Ví dụ: quy định bảo vệ tài sản công áp dụng cho mọi người quản lý tài sản đó.",
+      "phan": "Ví dụ này cho thấy tính ... vì ...",
+      "chot": "Vì vậy, người tuân thủ pháp luật là người hiểu lý do và làm đúng trách nhiệm."
+    }
+  },
+  {
+    "id": 6,
+    "big": ["Sẵn sàng chiến đấu là nhiệm vụ thường xuyên", "Bốn yếu tố: con người, tổ chức, trang bị, phương án", "Kiểm tra trung thực để khắc phục thiếu sót"],
+    "keys": ["con người", "tổ chức biên chế", "trang bị kỹ thuật", "phương án luyện tập", "chế độ trực"],
+    "chot": "Sẵn sàng chiến đấu là kết quả của chuẩn bị đồng bộ hằng ngày, không chỉ ở thời điểm nhận lệnh.",
+    "khung": {
+      "mo": "Sẵn sàng chiến đấu là nhiệm vụ thường xuyên, gắn với chức năng của quân đội.",
+      "giai": "Sẵn sàng chiến đấu là trạng thái ... cần chuẩn bị về ...",
+      "dan": "Ví dụ: một người làm sai phần việc nhỏ có thể ảnh hưởng cả quá trình phối hợp.",
+      "phan": "Ví dụ này cho thấy yếu tố ... quan trọng vì ...",
+      "chot": "Vì vậy, mỗi quân nhân làm tốt việc hằng ngày là góp phần sẵn sàng của đơn vị."
+    }
+  },
+  {
+    "id": 7,
+    "big": ["Cần: siêng năng, có kế hoạch, đạt kết quả", "Kiệm và liêm: dùng đúng, giữ gìn, trong sạch", "Chính và chí công vô tư: ngay thẳng, lợi ích chung"],
+    "keys": ["cần", "kiệm", "liêm", "chính", "chí công vô tư"],
+    "chot": "Năm phẩm chất gắn bó với nhau, rèn từ việc nhỏ và giữ đúng cả khi không ai giám sát.",
+    "khung": {
+      "mo": "Cần, kiệm, liêm, chính, chí công vô tư là phẩm chất cơ bản trong đạo đức Hồ Chí Minh.",
+      "giai": "Cần là ... Kiệm là ... Liêm là ... Chính là ... Chí công vô tư là ...",
+      "dan": "Ví dụ: tiết kiệm điện nước, không nhận thành tích không thuộc về mình.",
+      "phan": "Ví dụ này cho thấy phẩm chất ... vì ...",
+      "chot": "Vì vậy, rèn luyện năm phẩm chất là rèn cả việc nhỏ lẫn đạo đức trong sạch."
+    }
+  },
+  {
+    "id": 8,
+    "big": ["Luật Nghĩa vụ quân sự: nghĩa vụ công dân bảo vệ Tổ quốc", "Điều 9: trung thành, sẵn sàng chiến đấu, bảo vệ tài sản và nhân dân", "Gương mẫu, học tập; quyền lợi đi cùng nghĩa vụ"],
+    "keys": ["Điều 9", "trung thành", "sẵn sàng chiến đấu", "bảo vệ tài sản", "gương mẫu chấp hành"],
+    "chot": "Nghĩa vụ và quyền lợi của người lính thống nhất: làm tròn nghĩa vụ để xứng đáng với chế độ được bảo đảm.",
+    "khung": {
+      "mo": "Bảo vệ Tổ quốc là trách nhiệm của công dân, thực hiện nghĩa vụ quân sự là hình thức cụ thể.",
+      "giai": "Điều 9 quy định quyền và nghĩa vụ của hạ sĩ quan, binh sĩ. Nội dung đầu tiên là ...",
+      "dan": "Ví dụ: không tự ý rời vị trí, báo cáo trung thực, dùng trang bị đúng quy định.",
+      "phan": "Ví dụ này cho thấy trung thành được thể hiện qua ... vì ...",
+      "chot": "Vì vậy, giữ đúng nghĩa vụ là cách người lính chứng minh sự trung thành."
+    }
+  },
+  {
+    "id": 9,
+    "big": ["Tuyệt đối: Đảng là lực lượng lãnh đạo duy nhất", "Trực tiếp qua tổ chức đảng, kết hợp chế độ chỉ huy", "Về mọi mặt: chính trị, tư tưởng, tổ chức, cán bộ, huấn luyện, hậu cần"],
+    "keys": ["tuyệt đối", "trực tiếp", "về mọi mặt", "tư tưởng Hồ Chí Minh", "công tác cán bộ"],
+    "chot": "Đảng lãnh đạo quân đội tuyệt đối, trực tiếp về mọi mặt để giữ bản chất cách mạng và sự thống nhất.",
+    "khung": {
+      "mo": "Quân đội nhân dân Việt Nam ra đời và trưởng thành gắn với sự lãnh đạo của Đảng.",
+      "giai": "Tuyệt đối nghĩa là ... Trực tiếp nghĩa là ... Về mọi mặt gồm ...",
+      "dan": "Ví dụ: công tác cán bộ, cán bộ nêu gương trực tiếp cho chiến sĩ.",
+      "phan": "Ví dụ này cho thấy vai trò lãnh đạo ... vì ...",
+      "chot": "Vì vậy, học nguyên tắc này để hiểu vì sao rèn chính trị đi cùng huấn luyện."
+    }
+  },
+  {
+    "id": 10,
+    "big": ["Chất lượng trang bị phụ thuộc quá trình quản lý và sử dụng", "Làm chủ tính năng, dùng đúng quy trình, báo cáo bất thường", "Quản lý chặt, cán bộ nêu gương, phòng ngừa sau sự cố"],
+    "keys": ["tính năng quy tắc", "quản lý sổ sách", "sử dụng an toàn", "báo cáo bất thường", "phòng ngừa"],
+    "chot": "Trang bị phát huy hiệu quả khi người dùng hiểu, giữ gìn và sử dụng đúng quy định.",
+    "khung": {
+      "mo": "Vũ khí, trang bị kỹ thuật là phương tiện quan trọng cho huấn luyện và sẵn sàng chiến đấu.",
+      "giai": "Công tác chính trị cần giáo dục để bộ đội hiểu ... và làm chủ ...",
+      "dan": "Ví dụ: khi thấy dấu hiệu bất thường, ngừng thao tác và báo cáo.",
+      "phan": "Ví dụ này cho thấy việc ... quan trọng vì ...",
+      "chot": "Vì vậy, giữ gìn trang bị là bảo vệ an toàn cho đồng đội và nhiệm vụ."
+    }
+  },
+  {
+    "id": 11,
+    "big": ["Ba nhóm chính sách: tại ngũ, thân nhân, xuất ngũ", "Mốc dễ nhầm: tháng thứ mười ba nghỉ phép, tháng thứ hai mươi lăm phụ cấp (theo bài gốc, cần đối chiếu)", "Quyền lợi luôn gắn với nghĩa vụ"],
+    "keys": ["bảo đảm đời sống", "bảo hiểm y tế thân nhân", "trợ cấp xuất ngũ", "giấy tờ thủ tục", "không đòi vượt điều kiện"],
+    "chot": "Quyền lợi chính đáng cần được hiểu đúng và làm thủ tục đúng, đi cùng trách nhiệm trong thời gian tại ngũ.",
+    "khung": {
+      "mo": "Phục vụ tại ngũ đòi hỏi nghĩa vụ, và Nhà nước có chế độ đối với người tại ngũ và thân nhân.",
+      "giai": "Nhóm thứ nhất: ... Nhóm thứ hai: ... Nhóm thứ ba: ...",
+      "dan": "Ví dụ: nghỉ phép theo kế hoạch và thẩm quyền, không tự ý rời đơn vị.",
+      "phan": "Ví dụ này cho thấy quyền lợi gắn với ... vì ...",
+      "chot": "Vì vậy, hiểu đúng chế độ và làm đúng nghĩa vụ là hai mặt của một việc."
+    }
+  },
+  {
+    "id": 12,
+    "big": ["Con người là nhân tố then chốt của sẵn sàng chiến đấu", "Giáo dục nhận thức, động viên và chăm lo bộ đội", "Lãnh đạo chế độ trực, dân chủ quân sự, kiểm tra"],
+    "keys": ["nhân tố con người", "nhận diện nguy cơ", "nắm tâm tư", "chế độ trực", "dân chủ quân sự"],
+    "chot": "Công tác đảng, công tác chính trị giữ bản lĩnh và kỷ luật để đơn vị sẵn sàng khi có lệnh.",
+    "khung": {
+      "mo": "Sẵn sàng chiến đấu là nhiệm vụ thường xuyên, nhân tố con người giữ vai trò đặc biệt quan trọng.",
+      "giai": "Công tác đảng, công tác chính trị nhằm xây dựng ... và ...",
+      "dan": "Ví dụ: chiến sĩ có khó khăn gia đình được cấp trên hỏi han và hướng dẫn.",
+      "phan": "Ví dụ này cho thấy ... vì nếu bỏ qua con người thì ...",
+      "chot": "Vì vậy, sẵn sàng chiến đấu cần cả trang bị lẫn bản lĩnh và kỷ luật của người lính."
+    }
+  }
+]

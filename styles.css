@@ -310,6 +310,115 @@ th {
 
 .hidden { display: none !important; }
 
+/* Hôm nay */
+.duelist, .plan, .checklist {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  max-width: 62ch;
+}
+.duelist li, .plan li, .checklist li {
+  padding: 10px 0;
+  border-bottom: 1px solid var(--rule);
+}
+.duelist li {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: baseline;
+}
+.linkbtn {
+  padding: 0;
+  background: none;
+  border: 0;
+  color: var(--accent);
+  font: 500 16px/1.4 var(--serif);
+  text-align: left;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+.plan b { font-weight: 600; }
+.plan > li > label > span { font-size: 15px; }
+
+/* Thẻ 3-5-1 */
+.s351 h3 {
+  margin: 22px 0 8px;
+  font: 500 13px/1.4 var(--ui);
+  color: var(--muted);
+}
+.s351 h3:first-child { margin-top: 0; }
+ol.big {
+  margin: 0;
+  padding-left: 1.4em;
+  max-width: 60ch;
+  font: 400 17px/1.6 var(--serif);
+}
+ol.big li { margin-bottom: 4px; }
+.chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.chip {
+  padding: 4px 12px;
+  border: 1px solid var(--ink);
+  border-radius: 999px;
+  font-size: 14px;
+  background: var(--surface);
+}
+.chot {
+  margin: 0;
+  max-width: 60ch;
+  font: 600 17px/1.6 var(--serif);
+}
+.answer { padding-bottom: 8px; }
+.hintline {
+  margin: 14px 0 0;
+  color: var(--accent);
+  font-size: 14px;
+}
+
+/* Luyện hiểu: tab con */
+.subtabs {
+  display: flex;
+  gap: 18px;
+  margin-bottom: 12px;
+}
+.subtabs button {
+  padding: 0 0 6px;
+  background: none;
+  border: 0;
+  border-bottom: 2px solid transparent;
+  color: var(--muted);
+  font: 500 14px var(--ui);
+  cursor: pointer;
+}
+.subtabs button.active {
+  color: var(--ink);
+  border-bottom-color: var(--ink);
+}
+
+/* Khung đoạn văn */
+.khung {
+  list-style: none;
+  margin: 0 0 16px;
+  padding: 0;
+  max-width: 66ch;
+}
+.khung li {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  gap: 12px;
+  padding: 8px 0;
+  border-bottom: 1px solid var(--rule);
+  font: 400 16px/1.55 var(--serif);
+}
+.klabel {
+  font: 500 12px/1.9 var(--ui);
+  color: var(--accent);
+}
+
 /* Trắc nghiệm */
 .quiz fieldset.q {
   margin: 0 0 28px;
