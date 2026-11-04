@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ôn tập 12 bài văn Chính trị</title>
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header class="top">
+  <h1>Ôn tập 12 bài văn Chính trị</h1>
+  <div id="overall" class="overall"></div>
+</header>
+
+<div class="layout">
+  <aside>
+    <nav id="list" aria-label="Danh sách 12 câu"></nav>
+  </aside>
+
+  <main>
+    <div class="tabs" role="tablist">
+      <button data-tab="read" class="active">Dàn ý & bài văn</button>
+      <button data-tab="recall">Tự kiểm tra</button>
+      <button data-tab="timer">Viết 30 phút</button>
+      <button data-tab="progress">Tiến độ</button>
+    </div>
+    <section id="tab-read"></section>
+    <section id="tab-recall" hidden></section>
+    <section id="tab-timer" hidden></section>
+    <section id="tab-progress" hidden></section>
+  </main>
+</div>
+
+<script src="app.js"></script>
+</body>
+</html>
