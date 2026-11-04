@@ -1,0 +1,702 @@
+[
+  {
+    "id": 1,
+    "questions": [
+      {
+        "q": "Theo nghĩa hẹp, tự nhiên trong bài là gì?",
+        "options": [
+          "Toàn bộ thế giới vật chất khách quan",
+          "Những yếu tố vật chất nằm ngoài xã hội như đất đai, rừng, khí hậu",
+          "Các quan hệ giữa người với người",
+          "Các hình thái xã hội trong lịch sử"
+        ],
+        "a": 1,
+        "why": "Nghĩa hẹp chỉ bộ phận vật chất nằm ngoài xã hội. Nghĩa rộng mới là toàn bộ thế giới vật chất."
+      },
+      {
+        "q": "Vì sao không nên tuyệt đối hóa yếu tố địa lý?",
+        "options": [
+          "Vì tự nhiên không có vai trò gì",
+          "Vì cùng một điều kiện tự nhiên, kết quả còn phụ thuộc khoa học, tổ chức và cách khai thác",
+          "Vì con người không phụ thuộc vào tự nhiên",
+          "Vì thiên tai không gây thiệt hại"
+        ],
+        "a": 1,
+        "why": "Bài đưa ví dụ cùng một nguồn nước: nơi quản lý tốt dùng được lâu dài, nơi khai thác bừa bãi thì cạn kiệt."
+      },
+      {
+        "q": "Điểm khác của sự tác động của xã hội lên tự nhiên so với hiện tượng tự nhiên là gì?",
+        "options": [
+          "Diễn ra tự phát",
+          "Có mục đích và có thể dự kiến hậu quả",
+          "Không để lại hậu quả",
+          "Chỉ diễn ra trong thời gian ngắn"
+        ],
+        "a": 1,
+        "why": "Con người lao động có mục đích, nên có thể lựa chọn và dự kiến hậu quả."
+      },
+      {
+        "q": "Trong đơn vị, một vòi nước rò rỉ liên tục nhưng chưa ai báo cáo. Cách xử lý phù hợp với bài là gì?",
+        "options": [
+          "Bỏ qua vì đó là việc nhỏ",
+          "Báo cáo và xử lý để tránh lãng phí và hậu quả tích lũy",
+          "Tự thay đường ống mà không báo cáo",
+          "Đợi cấp trên hỏi rồi mới nói"
+        ],
+        "a": 1,
+        "why": "Bài nhấn mạnh việc làm đúng từ việc nhỏ hằng ngày và không để hành vi lãng phí tiếp diễn."
+      },
+      {
+        "q": "Vì sao cần kiểm tra kết quả sau khi thực hiện một việc làm ảnh hưởng môi trường?",
+        "options": [
+          "Vì chỉ nhìn lợi ích trước mắt là đủ",
+          "Vì ô nhiễm có độ trễ, hậu quả có thể xuất hiện muộn",
+          "Vì đợi ô nhiễm rõ rệt mới cần xử lý",
+          "Vì không cần theo dõi nếu đã làm đúng"
+        ],
+        "a": 1,
+        "why": "Bài nói hành vi xả thải hôm nay có thể chưa thấy hậu quả ngay, nhưng tích tụ lâu sẽ ảnh hưởng nguồn nước và sức khỏe."
+      }
+    ]
+  },
+  {
+    "id": 2,
+    "questions": [
+      {
+        "q": "Vì sao đạo đức được coi là gốc trong tư tưởng Hồ Chí Minh?",
+        "options": [
+          "Vì đạo đức quan trọng hơn tài năng",
+          "Vì đạo đức giúp người làm việc đứng vững trước cám dỗ và dùng năng lực đúng mục đích",
+          "Vì đạo đức có sẵn từ khi sinh ra",
+          "Vì đạo đức không cần rèn luyện"
+        ],
+        "a": 1,
+        "why": "Người có tài mà thiếu đức có thể dùng năng lực sai mục đích. Đạo đức được rèn trong công việc và quan hệ với mọi người."
+      },
+      {
+        "q": "Theo bài, tình thương con người trước hết hướng đến đối tượng nào?",
+        "options": [
+          "Những người có địa vị",
+          "Người lao động, người chịu khổ, bị áp bức và cần giúp đỡ",
+          "Người thân trong gia đình",
+          "Những người nổi tiếng"
+        ],
+        "a": 1,
+        "why": "Bài nêu rõ đối tượng là người lao động, người chịu khổ, bị áp bức và người cần được giúp đỡ."
+      },
+      {
+        "q": "Trong câu “nghiêm với mình, rộng với người”, rộng với người nghĩa là gì?",
+        "options": [
+          "Không góp ý ai để tránh mất lòng",
+          "Nhìn nhận cả nỗ lực và hoàn cảnh của người khác để họ có cơ hội tiến bộ",
+          "Bỏ qua mọi sai phạm của người khác",
+          "Đòi người khác phải hoàn hảo"
+        ],
+        "a": 1,
+        "why": "Rộng lượng không có nghĩa là bao che. Góp ý thẳng thắn, đúng mức vẫn là một cách thương người."
+      },
+      {
+        "q": "Đồng đội của bạn bị ốm nhưng chưa xin nghỉ. Cách ứng xử theo tinh thần bài là gì?",
+        "options": [
+          "Không liên quan đến mình nên không làm gì",
+          "Chia sẻ bớt công việc, hỏi han và hỗ trợ thiết thực",
+          "Báo với cấp trên để đồng đội bị phạt",
+          "Đòi được ưu tiên đổi việc"
+        ],
+        "a": 1,
+        "why": "Bài lấy ví dụ chia sẻ công việc với đồng đội đang ốm như một biểu hiện thương người cụ thể."
+      },
+      {
+        "q": "Bài nói việc thiên vị người thân quen rồi bỏ qua sai phạm sẽ dẫn đến điều gì?",
+        "options": [
+          "Làm tăng đoàn kết",
+          "Làm hại tập thể về lâu dài",
+          "Là biểu hiện của tình cảm tốt",
+          "Không ảnh hưởng gì"
+        ],
+        "a": 1,
+        "why": "Tình cảm phải đi cùng công bằng và kỷ luật."
+      }
+    ]
+  },
+  {
+    "id": 3,
+    "questions": [
+      {
+        "q": "Cương lĩnh năm 2011 nêu bao nhiêu đặc trưng của xã hội xã hội chủ nghĩa Việt Nam?",
+        "options": ["Sáu", "Bảy", "Tám", "Mười"],
+        "a": 2,
+        "why": "Tám đặc trưng, từ dân giàu nước mạnh đến quan hệ hữu nghị và hợp tác với các nước."
+      },
+      {
+        "q": "Đặc trưng nào xác định chủ thể của toàn bộ quá trình xây dựng xã hội?",
+        "options": [
+          "Dân giàu, nước mạnh",
+          "Do nhân dân làm chủ",
+          "Văn hóa tiên tiến",
+          "Quan hệ hữu nghị và hợp tác"
+        ],
+        "a": 1,
+        "why": "Bài coi đặc trưng này quan trọng vì nó xác định ai là chủ thể xây dựng đất nước."
+      },
+      {
+        "q": "Cụm “của nhân dân, do nhân dân, vì nhân dân” nhấn mạnh điều gì?",
+        "options": [
+          "Quy mô lãnh thổ",
+          "Nguồn gốc, phương thức và mục tiêu của quyền lực nhà nước",
+          "Mức thu nhập của người dân",
+          "Quan hệ đối ngoại"
+        ],
+        "a": 1,
+        "why": "Cụm này nói về nguồn gốc, cách thức thực hiện và mục tiêu phục vụ của quyền lực nhà nước."
+      },
+      {
+        "q": "Bạn muốn góp ý về một việc chung trong đơn vị. Cách làm đúng tinh thần “do nhân dân làm chủ” là gì?",
+        "options": [
+          "Đăng lên mạng khi chưa nói với ai",
+          "Góp ý đúng quy định, lắng nghe và tôn trọng quyết định chung",
+          "Không góp ý để tránh rắc rối",
+          "Đòi làm theo ý mình bất chấp tập thể"
+        ],
+        "a": 1,
+        "why": "Quyền làm chủ đi cùng trách nhiệm, phải thực hiện qua kênh đúng quy định và tôn trọng tập thể."
+      },
+      {
+        "q": "Đặc trưng nào liên quan đến quan hệ đối ngoại?",
+        "options": [
+          "Đặc trưng thứ tám",
+          "Đặc trưng thứ hai",
+          "Đặc trưng thứ năm",
+          "Đặc trưng thứ tư"
+        ],
+        "a": 0,
+        "why": "Đặc trưng thứ tám là quan hệ hữu nghị và hợp tác với các nước trên thế giới."
+      }
+    ]
+  },
+  {
+    "id": 4,
+    "questions": [
+      {
+        "q": "“Trung với nước” gồm nội dung chính nào?",
+        "options": [
+          "Chỉ tham gia chiến đấu khi có chiến tranh",
+          "Bảo vệ độc lập, chủ quyền, thống nhất và toàn vẹn lãnh thổ",
+          "Làm việc khi có lợi cho bản thân",
+          "Nói yêu nước nhưng không cần hành động"
+        ],
+        "a": 1,
+        "why": "Thời bình, lòng trung vẫn thể hiện qua học tập, huấn luyện, giữ bí mật và chấp hành kỷ luật."
+      },
+      {
+        "q": "“Hiếu với dân” được thể hiện cụ thể qua điều nào?",
+        "options": [
+          "Buộc dân phục vụ mình",
+          "Không gây phiền hà, không lấy quyền hạn để áp đặt, giúp dân trong phạm vi nhiệm vụ",
+          "Hứa nhiều để dân vui lòng",
+          "Tránh tiếp xúc với dân"
+        ],
+        "a": 1,
+        "why": "Thái độ hiếu với dân không chỉ là lời lẽ lễ phép mà còn là hành động cụ thể."
+      },
+      {
+        "q": "Vì sao hai vế “trung với nước” và “hiếu với dân” thống nhất với nhau?",
+        "options": [
+          "Vì nước và dân là hai khái niệm xa nhau",
+          "Vì bảo vệ Tổ quốc gắn với bảo vệ cuộc sống bình yên của nhân dân",
+          "Vì quân đội không liên quan đến dân",
+          "Vì dân không cần đất nước"
+        ],
+        "a": 1,
+        "why": "Yêu nước thật sự phải đi cùng thương dân, và ngược lại."
+      },
+      {
+        "q": "Trong đợt thiên tai, đơn vị được lệnh giúp dân. Thái độ đúng theo bài là gì?",
+        "options": [
+          "Làm theo cảm tính, không cần kỷ luật",
+          "Giúp dân đúng chức trách, giữ kỷ luật và tác phong chuẩn mực",
+          "Chỉ làm khi được khen thưởng",
+          "Từ chối giúp đỡ"
+        ],
+        "a": 1,
+        "why": "Tình cảm dành cho dân phải đi cùng năng lực hoàn thành nhiệm vụ."
+      },
+      {
+        "q": "“Trung với Đảng” trong bài được hiểu là gì?",
+        "options": [
+          "Thuộc lòng các khẩu hiệu",
+          "Kiên định lý tưởng, đường lối và nói đi đôi với làm",
+          "Không được góp ý với Đảng",
+          "Làm mọi việc mà không cần kiểm tra"
+        ],
+        "a": 1,
+        "why": "Bài nhấn mạnh trung thành không chỉ là thuộc khẩu hiệu mà phải thể hiện qua chất lượng công việc."
+      }
+    ]
+  },
+  {
+    "id": 5,
+    "questions": [
+      {
+        "q": "Pháp luật là hệ thống quy tắc xử sự chung do ai ban hành hoặc thừa nhận?",
+        "options": ["Tổ chức quần chúng", "Nhà nước", "Cá nhân có uy tín", "Gia đình"],
+        "a": 1,
+        "why": "Định nghĩa pháp luật gắn với vai trò ban hành và bảo đảm thực hiện của Nhà nước."
+      },
+      {
+        "q": "“Tính quy phạm phổ biến” nghĩa là gì?",
+        "options": [
+          "Mọi quy định đều áp dụng giống nhau cho tất cả mọi người",
+          "Đặt ra mẫu hành vi chung lặp lại trong tình huống tương tự, mỗi quy phạm vẫn có đối tượng và điều kiện riêng",
+          "Chỉ áp dụng một lần cho một sự việc",
+          "Không có tính bắt buộc"
+        ],
+        "a": 1,
+        "why": "Tính phổ biến không có nghĩa mọi quy định áp dụng cho tất cả mọi người; mỗi quy phạm có phạm vi riêng."
+      },
+      {
+        "q": "Chức năng nào giúp con người tự giác tuân thủ vì hiểu lý do một hành vi được phép hoặc bị cấm?",
+        "options": ["Điều chỉnh", "Bảo vệ", "Giáo dục", "Cưỡng chế"],
+        "a": 2,
+        "why": "Chức năng giáo dục tác động vào nhận thức và thói quen xử sự."
+      },
+      {
+        "q": "Bạn thấy người khác vi phạm quy định về tài sản chung. Hành xử đúng theo bài là gì?",
+        "options": [
+          "Tự xử phạt người đó",
+          "Báo cáo đúng kênh, không bao che, không tự ý kết luận",
+          "Bỏ qua vì không liên quan đến mình",
+          "Đăng lên mạng kèm kết luận"
+        ],
+        "a": 1,
+        "why": "Phát hiện vi phạm thì báo cáo đúng kênh, không bao che nhưng cũng không xử lý vượt thẩm quyền."
+      },
+      {
+        "q": "Theo bài, vì sao phần lớn người dân chấp hành pháp luật?",
+        "options": [
+          "Vì sợ bị phạt",
+          "Vì biết quy định cần thiết và quyền, lợi ích của mình được bảo vệ",
+          "Vì không có lựa chọn nào khác",
+          "Vì bị ép buộc"
+        ],
+        "a": 1,
+        "why": "Bài nói cưỡng chế chỉ là biện pháp bảo đảm cuối cùng, không phải lý do chính để người dân chấp hành."
+      }
+    ]
+  },
+  {
+    "id": 6,
+    "questions": [
+      {
+        "q": "Sẵn sàng chiến đấu được hiểu đúng nhất là gì?",
+        "options": [
+          "Chỉ là thời điểm nhận lệnh",
+          "Quá trình chuẩn bị thường xuyên về con người, tổ chức, trang bị và phương án",
+          "Chỉ là số lượng trang bị",
+          "Chỉ diễn ra trong thời chiến"
+        ],
+        "a": 1,
+        "why": "Sẵn sàng là kết quả của cả quá trình học tập, huấn luyện, quản lý và duy trì nền nếp hằng ngày."
+      },
+      {
+        "q": "Yếu tố nào KHÔNG thuộc các yếu tố được bài nêu của sẵn sàng chiến đấu?",
+        "options": [
+          "Con người",
+          "Tổ chức, biên chế",
+          "Vũ khí, trang bị kỹ thuật",
+          "Tiền thưởng cá nhân"
+        ],
+        "a": 3,
+        "why": "Bài nêu bốn yếu tố: con người, tổ chức, trang bị kỹ thuật và phương án, luyện tập."
+      },
+      {
+        "q": "Kiểm tra sau một đợt luyện tập nhằm mục đích gì?",
+        "options": [
+          "Đủ hồ sơ để báo cáo",
+          "Tìm nguyên nhân, khắc phục thiếu sót một cách trung thực",
+          "Chứng minh thành tích",
+          "Trừng phạt người yếu"
+        ],
+        "a": 1,
+        "why": "Kiểm tra chỉ để đủ hồ sơ sẽ không tạo ra sức mạnh thực chất."
+      },
+      {
+        "q": "Trong luyện tập bạn thấy động tác của mình chưa đúng nhưng nghĩ cho qua. Cách làm đúng là gì?",
+        "options": [
+          "Làm qua loa cho có kết quả",
+          "Sửa động tác sai và hỏi khi chưa hiểu",
+          "Đổ lỗi cho đồng đội",
+          "Không báo cáo"
+        ],
+        "a": 1,
+        "why": "Bài yêu cầu luyện tập nghiêm túc, không làm qua loa để có kết quả trên giấy."
+      },
+      {
+        "q": "Theo bài, người trực cần làm gì?",
+        "options": [
+          "Rời vị trí khi thấy mệt",
+          "Ở đúng vị trí, nắm phương thức báo cáo và không sao nhãng",
+          "Trực theo sở thích cá nhân",
+          "Không cần biết phương án"
+        ],
+        "a": 1,
+        "why": "Người trực phải ở đúng vị trí và nắm rõ cách báo cáo."
+      }
+    ]
+  },
+  {
+    "id": 7,
+    "questions": [
+      {
+        "q": "Trong bài, “cần” được hiểu là gì?",
+        "options": [
+          "Làm nhiều dù không hiệu quả",
+          "Siêng năng, có kế hoạch và làm việc đạt kết quả",
+          "Không cần kế hoạch",
+          "Chỉ làm khi được nhắc"
+        ],
+        "a": 1,
+        "why": "Bận rộn mà không hiệu quả thì chưa phải là cần."
+      },
+      {
+        "q": "Phân biệt “kiệm” và “hà tiện”, đâu là đúng?",
+        "options": [
+          "Hai khái niệm giống nhau",
+          "Kiệm là dùng đúng mục đích và giữ gìn để dùng lâu dài, không cắt bỏ nhu cầu chính đáng",
+          "Kiệm là không tiêu gì cả",
+          "Hà tiện là tốt hơn kiệm"
+        ],
+        "a": 1,
+        "why": "Tiết kiệm không phải là hà tiện hay cắt bỏ những nhu cầu thiết yếu cho an toàn và sức khỏe."
+      },
+      {
+        "q": "Liêm được thể hiện như thế nào?",
+        "options": [
+          "Chỉ trong sạch khi có người giám sát",
+          "Không lợi dụng chức trách và giữ đúng trách nhiệm kể cả khi không ai nhìn",
+          "Lấy đồ dùng chung khi cần",
+          "Không kiểm kê tài sản"
+        ],
+        "a": 1,
+        "why": "Bài nhấn mạnh nếu chỉ trong sạch khi bị giám sát thì phẩm chất chưa thật sự thành thói quen."
+      },
+      {
+        "q": "Bạn được giao quản lý đồ dùng và nhận thấy sổ sách bị sai lệch. Cách xử lý đúng là gì?",
+        "options": [
+          "Tự sửa số liệu cho khớp",
+          "Báo cáo trung thực",
+          "Bỏ qua",
+          "Giấu đi để tránh rắc rối"
+        ],
+        "a": 1,
+        "why": "Chính trực và liêm gắn với việc báo cáo đúng sự thật."
+      },
+      {
+        "q": "Năm phẩm chất quan hệ với nhau như thế nào?",
+        "options": [
+          "Có thể tách rời, không ảnh hưởng đến nhau",
+          "Gắn bó với nhau, thiếu một phẩm chất có thể làm suy yếu các phẩm chất còn lại",
+          "Chỉ cần có cần là đủ",
+          "Chỉ cần có chính là đủ"
+        ],
+        "a": 1,
+        "why": "Ví dụ: người chăm chỉ nhưng không liêm có thể dùng năng lực để trục lợi."
+      }
+    ]
+  },
+  {
+    "id": 8,
+    "questions": [
+      {
+        "q": "Điều 9 Luật Nghĩa vụ quân sự quy định nội dung nào trong bài?",
+        "options": [
+          "Thủ tục xuất ngũ",
+          "Quyền và nghĩa vụ của hạ sĩ quan, binh sĩ",
+          "Chế độ học phí",
+          "Tuyển sinh quân sự"
+        ],
+        "a": 1,
+        "why": "Bài phân tích Điều 9 về quyền và nghĩa vụ của hạ sĩ quan, binh sĩ."
+      },
+      {
+        "q": "Nội dung đầu tiên của nghĩa vụ theo Điều 9 là gì?",
+        "options": [
+          "Tuyệt đối trung thành với Tổ quốc, Nhân dân, Đảng và Nhà nước",
+          "Học ngoại ngữ",
+          "Làm kinh tế",
+          "Tham gia giáo dục"
+        ],
+        "a": 0,
+        "why": "Đây là nội dung đầu tiên được bài nêu."
+      },
+      {
+        "q": "Theo bài, bảo vệ tài sản còn bao gồm điều gì ngoài việc ngăn kẻ xấu lấy đi?",
+        "options": [
+          "Sử dụng đúng và bảo quản tốt",
+          "Cất giữ, không dùng",
+          "Bán đi khi không cần",
+          "Cho người khác mượn"
+        ],
+        "a": 0,
+        "why": "Bảo vệ tài sản là sử dụng đúng và bảo quản tốt, không để hư hỏng vì bất cẩn."
+      },
+      {
+        "q": "Bạn có thắc mắc về chế độ. Cách làm phù hợp theo bài là gì?",
+        "options": [
+          "Tin lời người truyền miệng",
+          "Tìm văn bản đáng tin cậy và hỏi cơ quan có trách nhiệm",
+          "Đăng lên mạng để nhiều người biết",
+          "Đòi giải quyết ngay theo ý mình"
+        ],
+        "a": 1,
+        "why": "Bài khuyên không lan truyền tin đồn và tìm nguồn văn bản đáng tin cậy."
+      },
+      {
+        "q": "“Gương mẫu chấp hành” theo bài nhấn mạnh điều gì?",
+        "options": [
+          "Chỉ làm khi bị kiểm tra",
+          "Mức độ tự giác cao, không đợi kiểm tra mới làm",
+          "Làm theo người khác",
+          "Không cần tuân thủ điều lệnh"
+        ],
+        "a": 1,
+        "why": "Từ gương mẫu nhấn mạnh sự tự giác."
+      }
+    ]
+  },
+  {
+    "id": 9,
+    "questions": [
+      {
+        "q": "“Tuyệt đối” trong nguyên tắc Đảng lãnh đạo Quân đội nghĩa là gì?",
+        "options": [
+          "Đảng là một trong nhiều lực lượng lãnh đạo",
+          "Đảng là lực lượng lãnh đạo duy nhất đối với Quân đội",
+          "Quân đội tự quyết định mục tiêu",
+          "Đảng chỉ lãnh đạo về chính trị"
+        ],
+        "a": 1,
+        "why": "Tuyệt đối nghĩa là Đảng là lực lượng lãnh đạo duy nhất, không để tổ chức khác chi phối."
+      },
+      {
+        "q": "“Trực tiếp” nghĩa là gì?",
+        "options": [
+          "Lãnh đạo chỉ qua văn kiện",
+          "Lãnh đạo qua hệ thống tổ chức đảng và con người trong quân đội, kết hợp với chế độ chỉ huy",
+          "Bỏ qua người chỉ huy",
+          "Chỉ thông qua báo chí"
+        ],
+        "a": 1,
+        "why": "Trực tiếp không có nghĩa bỏ qua trách nhiệm của người chỉ huy."
+      },
+      {
+        "q": "Theo bài, nền tảng giáo dục nhận thức tư tưởng trong quân đội là gì?",
+        "options": [
+          "Chủ nghĩa Mác - Lênin và tư tưởng Hồ Chí Minh",
+          "Tin đồn trong đơn vị",
+          "Kinh nghiệm cá nhân",
+          "Quảng cáo trên mạng"
+        ],
+        "a": 0,
+        "why": "Đây là nền tảng định hướng nhận thức của quân nhân."
+      },
+      {
+        "q": "Bạn gặp thông tin trên mạng nói xấu đơn vị. Cách làm đúng là gì?",
+        "options": [
+          "Chia sẻ để cảnh báo mọi người",
+          "Không phát tán thông tin chưa kiểm chứng, hỏi cấp có trách nhiệm để hiểu đúng",
+          "Tin ngay và làm theo",
+          "Bình luận gay gắt"
+        ],
+        "a": 1,
+        "why": "Bài yêu cầu kỹ năng kiểm chứng và không suy diễn."
+      },
+      {
+        "q": "Vì sao công tác cán bộ có ý nghĩa đặc biệt?",
+        "options": [
+          "Vì cán bộ không quan trọng",
+          "Vì người cán bộ tổ chức, huấn luyện, chỉ huy và nêu gương trực tiếp cho chiến sĩ",
+          "Vì cán bộ không có trách nhiệm",
+          "Để thay thế vai trò của Đảng"
+        ],
+        "a": 1,
+        "why": "Người cán bộ là người trực tiếp làm gương và tổ chức thực hiện."
+      }
+    ]
+  },
+  {
+    "id": 10,
+    "questions": [
+      {
+        "q": "Chất lượng vũ khí, trang bị phụ thuộc chủ yếu vào điều gì?",
+        "options": [
+          "Lúc được cấp phát",
+          "Quá trình quản lý, sử dụng, bảo quản và bảo dưỡng",
+          "Số lượng",
+          "Màu sơn"
+        ],
+        "a": 1,
+        "why": "Trang bị tốt cũng không phát huy được nếu quá trình quản lý và sử dụng không đúng."
+      },
+      {
+        "q": "Khi phát hiện dấu hiệu bất thường khi sử dụng trang bị, bài khuyên làm gì?",
+        "options": [
+          "Tiếp tục để không ảnh hưởng huấn luyện",
+          "Ngừng thao tác theo hướng dẫn và báo cáo trung thực",
+          "Tự sửa vượt thẩm quyền",
+          "Giấu đi"
+        ],
+        "a": 1,
+        "why": "Ngừng đúng quy định và báo cáo giúp phòng sự cố lớn hơn."
+      },
+      {
+        "q": "Vì sao không được tự ý tháo lắp trang bị?",
+        "options": [
+          "Vì tháo lắp làm mất đẹp",
+          "Vì sử dụng phải đúng quy định và thẩm quyền để bảo đảm an toàn",
+          "Vì không có dụng cụ",
+          "Vì không cần biết cấu tạo"
+        ],
+        "a": 1,
+        "why": "Mọi thao tác phải theo lệnh và quy trình có thẩm quyền."
+      },
+      {
+        "q": "Đồng đội của bạn cho rằng trang bị là “của chung nên không ai phải giữ”. Bạn nên làm gì?",
+        "options": [
+          "Mặc kệ",
+          "Nhắc nhở, giáo dục ý thức giữ gìn và báo cáo nếu cần",
+          "Làm theo",
+          "Cười cho qua"
+        ],
+        "a": 1,
+        "why": "Đây là một biểu hiện sai mà bài yêu cầu đấu tranh chống."
+      },
+      {
+        "q": "Sau một sự cố, bài khuyên cách phòng ngừa thế nào?",
+        "options": [
+          "Phê bình người gây lỗi là đủ",
+          "Tìm nguyên nhân: hướng dẫn đã rõ chưa, phân công có hợp lý không, người dùng đã luyện tập đủ chưa",
+          "Không làm gì thêm",
+          "Cấm dùng vĩnh viễn"
+        ],
+        "a": 1,
+        "why": "Chỉ phê bình sau sự cố mà không sửa điều kiện gây ra sai sót sẽ khó tạo thay đổi bền vững."
+      }
+    ]
+  },
+  {
+    "id": 11,
+    "questions": [
+      {
+        "q": "Bài chia quyền lợi thành bao nhiêu nhóm?",
+        "options": ["Hai", "Ba", "Bốn", "Năm"],
+        "a": 1,
+        "why": "Ba nhóm: trong thời gian tại ngũ, đối với thân nhân, và khi xuất ngũ."
+      },
+      {
+        "q": "Chính sách đối với thân nhân gồm nội dung nào?",
+        "options": [
+          "Tiền thưởng cá nhân",
+          "Bảo hiểm y tế và trợ cấp khó khăn theo điều kiện luật định",
+          "Tiền tàu xe",
+          "Phụ cấp quân hàm"
+        ],
+        "a": 1,
+        "why": "Đối tượng và điều kiện được luật định cụ thể."
+      },
+      {
+        "q": "Theo bài, khi nói về chế độ cho thân nhân, điều nào đúng?",
+        "options": [
+          "Mọi thành viên đều hưởng mọi chế độ như nhau",
+          "Không phải mọi thành viên đều hưởng mọi chế độ như nhau",
+          "Không ai được hưởng",
+          "Chỉ bố mẹ được hưởng"
+        ],
+        "a": 1,
+        "why": "Cần đối chiếu điều kiện cụ thể của từng trường hợp."
+      },
+      {
+        "q": "Bạn được nghỉ phép nhưng có việc đột xuất trong đơn vị. Cách làm đúng là gì?",
+        "options": [
+          "Tự ý rời đơn vị vì có quyền nghỉ phép",
+          "Nghỉ phép theo kế hoạch và thẩm quyền; việc đột xuất xử lý theo quy định",
+          "Không báo cáo",
+          "Gọi bạn bè đến đón"
+        ],
+        "a": 1,
+        "why": "Nghỉ phép phải theo kế hoạch và thẩm quyền, không phải tự ý."
+      },
+      {
+        "q": "Khi xuất ngũ, bài nêu các khoản nào?",
+        "options": [
+          "Tiền tàu xe, phụ cấp đi đường, trợ cấp xuất ngũ",
+          "Lương hằng tháng",
+          "Miễn học phí cho bản thân",
+          "Bảo hiểm cho thân nhân"
+        ],
+        "a": 0,
+        "why": "Các khoản này nằm trong nhóm chế độ khi xuất ngũ."
+      }
+    ]
+  },
+  {
+    "id": 12,
+    "questions": [
+      {
+        "q": "Nhân tố nào giữ vai trò đặc biệt quan trọng trong sẵn sàng chiến đấu?",
+        "options": [
+          "Số lượng trang bị",
+          "Con người",
+          "Thời tiết",
+          "Địa hình"
+        ],
+        "a": 1,
+        "why": "Trang bị và phương án cần thiết, nhưng nhân tố con người giữ vai trò đặc biệt quan trọng."
+      },
+      {
+        "q": "Giáo dục nhận thức trong sẵn sàng chiến đấu cần giúp bộ đội làm gì?",
+        "options": [
+          "Chỉ học thuộc lòng",
+          "Hiểu tình hình, nhiệm vụ, nhận diện nguy cơ, giữ cảnh giác nhưng không hoang mang",
+          "Không cần biết nguy cơ",
+          "Tin mọi tin đồn"
+        ],
+        "a": 1,
+        "why": "Nhận thức đúng là cơ sở cho hành động đúng."
+      },
+      {
+        "q": "Theo bài, động viên bao gồm điều gì ngoài phát biểu quyết tâm?",
+        "options": [
+          "Nắm tình hình tư tưởng và giải đáp thắc mắc",
+          "Không cần làm gì thêm",
+          "Phạt những người khó khăn",
+          "Ghi tên vào sổ"
+        ],
+        "a": 0,
+        "why": "Động viên thật sự cần nắm tâm tư và giải quyết thắc mắc của bộ đội."
+      },
+      {
+        "q": "Chiến sĩ có vấn đề gia đình ảnh hưởng đến nhiệm vụ. Cách xử lý đúng là gì?",
+        "options": [
+          "Tự xử lý và không nói với ai",
+          "Trao đổi với cấp có trách nhiệm để được hướng dẫn",
+          "Bỏ việc",
+          "Nhờ người khác làm mà không báo"
+        ],
+        "a": 1,
+        "why": "Bài khuyên trao đổi với cấp có trách nhiệm thay vì tự ý xử lý."
+      },
+      {
+        "q": "Chế độ trực ban, trực chiến có tác dụng gì?",
+        "options": [
+          "Chỉ để có người ngồi",
+          "Giúp chỉ huy thông suốt, quân số rõ và thông tin được báo cáo kịp thời",
+          "Thay thế huấn luyện",
+          "Không cần tuân thủ"
+        ],
+        "a": 1,
+        "why": "Chế độ trực bảo đảm chỉ huy thông suốt và thông tin đến đúng lúc."
+      }
+    ]
+  }
+]
