@@ -399,6 +399,74 @@ ol.big li { margin-bottom: 4px; }
   border-bottom-color: var(--ink);
 }
 
+/* Sơ đồ một trang */
+.mmap {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: 18px 28px;
+  align-items: center;
+  margin: 8px 0 4px;
+}
+.mm-col {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.mm-node {
+  padding: 6px 0 6px 14px;
+  border-left: 2px solid var(--accent);
+  font: 400 15px/1.5 var(--serif);
+}
+.mm-root {
+  padding: 16px 18px;
+  border: 1.5px solid var(--ink);
+  max-width: 210px;
+  text-align: center;
+  font: 600 17px/1.35 var(--serif);
+}
+.mm-keys { align-items: flex-start; }
+.mm-key {
+  padding: 4px 10px;
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  font-size: 14px;
+}
+.mm-chot {
+  grid-column: 1 / -1;
+  padding-top: 12px;
+  border-top: 1px solid var(--rule);
+  font: 400 16px/1.6 var(--serif);
+}
+@media (max-width: 820px) {
+  .mmap { grid-template-columns: 1fr; }
+  .mm-root { max-width: none; }
+}
+
+/* Viết theo khung: ô riêng cho từng phần, kết quả kiểm tra */
+.wpart { margin-bottom: 18px; }
+.wlabel { margin: 0 0 6px; font-size: 14px; }
+.wpart textarea { min-height: 96px; font-size: 16px; }
+.checks {
+  list-style: none;
+  margin: 8px 0 0;
+  padding: 0;
+  max-width: 66ch;
+}
+.checks li {
+  padding: 7px 0;
+  border-bottom: 1px solid var(--rule);
+  font-size: 15px;
+}
+.mark {
+  display: inline-block;
+  min-width: 46px;
+  margin-right: 8px;
+  font: 500 12px var(--ui);
+  color: var(--muted);
+}
+.mark.ok { color: var(--pass); }
+.mark.todo { color: var(--miss); }
+
 /* Khung đoạn văn */
 .khung {
   list-style: none;

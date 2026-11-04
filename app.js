@@ -46,6 +46,15 @@
     const t = text.trim();
     return t ? t.split(/\s+/).length : 0;
   };
+  // Chuẩn hóa tiếng Việt để so khớp từ khóa: bỏ dấu, chữ thường
+  const norm = (s) => s
+    .normalize("NFD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[đĐ]/g, "d")
+    .toLowerCase()
+    .replace(/[^a-z0-9\s]/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
   // ---------- Ngày (YYYY-MM-DD, theo giờ địa phương) ----------
   const pad = (n) => String(n).padStart(2, "0");
@@ -208,7 +217,18 @@
       </div>`;
   }
 
-  // ---------- Học bài: thẻ 3-5-1 và dàn ý ----------
+  // ---------- Học bài: thẻ 3-5-1, sơ đồ một trang và dàn ý ----------
+  function mindMapHTML(i) {
+    const st = studyFor(i);
+    return `
+      <div class="mmap">
+        <div class="mm-col">${st.big.map((x) => `<div class="mm-node">${esc(x)}</div>`).join("")}</div>
+        <div class="mm-root"><span>${esc(titleOf(state.essays[i]))}</span></div>
+        <div class="mm-col mm-keys">${st.keys.map((x) => `<span class="mm-key">${esc(x)}</span>`).join("")}</div>
+        <div class="mm-chot"><span class="klabel">Câu chốt</span> ${esc(st.chot)}</div>
+      </div>`;
+  }
+
   function renderRead() {
     const e = state.essays[state.current];
     const st = studyFor(state.current);
@@ -216,6 +236,8 @@
       <div class="card">
         <h2>${esc(e.title)}</h2>
         <p class="meta">Hiểu trước, nhớ sau. Đọc phần 3-5-1 và dàn ý, không cần học thuộc cả bài.</p>
+        <h3>Sơ đồ một trang</h3>
+        ${mindMapHTML(state.current)}
         <div class="s351">
           <h3>3 ý lớn</h3>
           <ol class="big">${st.big.map((x) => `<li>${esc(x)}</li>`).join("")}</ol>
@@ -427,11 +449,48 @@
   // ---------- Viết theo khung + đồng hồ 30 phút ----------
   const fmt = (sec) => `${pad(Math.floor(sec / 60))}:${pad(sec % 60)}`;
 
+  // Kiểm tra cấu trúc bằng quy tắc (không dùng AI): chỉ kiểm tra hình thức và từ khóa
+  const CONN = {
+    dan: ["vi du", "chang han", "nhu the"],
+    phan: ["cho thay", "chung to", "vi", "dieu nay", "bo i"],
+    chot: ["vi vay", "do do", "qua do", "tom lai", "tu do"],
+  };
+  const hasAny = (text, list) => {
+    const t = " " + norm(text) + " ";
+    return list.some((w) => t.includes(" " + w + " "));
+  };
+
+  function checkWriting(i) {
+    const st = studyFor(i);
+    const part = (k) => (state.drafts[`w${i}-${k}`] || "").trim();
+    const all = KHUNG.map(([, k]) => part(k)).join(" ");
+    const usedKeys = st.keys.filter((k) => (" " + norm(all) + " ").includes(" " + norm(k) + " "));
+    const longSent = all.split(/[.!?]+/).filter((s) => countWords(s) > 40).length;
+    const items = [
+      [countWords(part("mo")) >= 6, "MỞ: có ít nhất 6 chữ nêu vấn đề."],
+      [countWords(part("giai")) >= 8, "GIẢI: có ít nhất 8 chữ giải thích khái niệm."],
+      [countWords(part("dan")) >= 8 || hasAny(part("dan"), CONN.dan), "DẪN: có dẫn chứng cụ thể, như một ví dụ hoặc một sự việc."],
+      [hasAny(part("phan"), CONN.phan), "PHÂN: có câu nói dẫn chứng cho thấy điều gì (ví dụ: cho thấy, vì)."],
+      [hasAny(part("chot"), CONN.chot), "CHỐT: có câu khẳng định lại (ví dụ: vì vậy, do đó, tóm lại)."],
+      [usedKeys.length >= 3, `Dùng ít nhất 3 trong 5 từ khóa. Hiện dùng ${usedKeys.length}.`],
+      [longSent === 0, longSent ? `Có ${longSent} câu trên 40 chữ, nên tách ngắn lại.` : "Không có câu nào trên 40 chữ."],
+    ];
+    return { i, items, usedKeys };
+  }
+
+  function checkHTML(chk) {
+    const passed = chk.items.filter(([ok]) => ok).length;
+    return `
+      <h3>Kiểm tra cấu trúc: ${passed}/${chk.items.length} mục đạt</h3>
+      <p class="meta">Chỉ kiểm tra hình thức và từ khóa, không chấm nội dung hay văn phong.</p>
+      <ul class="checks">${chk.items.map(([ok, t]) => `<li><span class="mark ${ok ? "ok" : "todo"}">${ok ? "Đạt" : "Chưa"}</span> ${esc(t)}</li>`).join("")}</ul>`;
+  }
+
   function renderWrite() {
     const i = state.current;
     const e = state.essays[i];
     const st = studyFor(i);
-    const key = "w" + i;
+    const chk = state.writeChecked && state.writeChecked.i === i ? state.writeChecked : null;
     $("#tab-write").innerHTML = `
       <div class="card">
         <h2>Viết thử: ${esc(titleOf(e))}</h2>
@@ -443,16 +502,33 @@
         </div>
       </div>
       <div class="card">
-        <h3>Khung đoạn văn</h3>
-        <ol class="khung">${KHUNG.map(([label, k]) => `
-          <li><span class="klabel">${label}</span><span>${esc(st.khung[k])}</span></li>`).join("")}</ol>
-        <p class="meta">Dẫn chứng phải liên quan trực tiếp đến luận điểm. Không thêm chi tiết bạn không chắc.</p>
-        <textarea id="writeText" placeholder="Viết đoạn văn theo khung tại đây"></textarea>
-        <p class="meta"><span id="wc2">${countWords(state.drafts[key] || "")}</span> chữ</p>
+        <h3>Viết theo khung MỞ - GIẢI - DẪN - PHÂN - CHỐT</h3>
+        <p class="meta">Mỗi phần viết trong ô riêng. Dẫn chứng phải liên quan trực tiếp đến luận điểm.</p>
+        ${KHUNG.map(([label, k]) => `
+          <div class="wpart">
+            <p class="wlabel"><span class="klabel">${label}</span> <span class="meta">${esc(st.khung[k])}</span></p>
+            <textarea data-wk="${k}" aria-label="${label}"></textarea>
+          </div>`).join("")}
+        <div class="controls">
+          <button class="btn primary" id="checkWrite">Kiểm tra cấu trúc</button>
+          <span class="meta" id="wcTotal"></span>
+        </div>
+        <div id="writeResult">${chk ? checkHTML(chk) : ""}</div>
       </div>`;
-    const ta = $("#writeText");
-    ta.value = state.drafts[key] || "";
-    ta.oninput = () => { state.drafts[key] = ta.value; $("#wc2").textContent = countWords(ta.value); };
+    const updateCount = () => {
+      const n = KHUNG.reduce((s, [, k]) => s + countWords(state.drafts[`w${i}-${k}`] || ""), 0);
+      $("#wcTotal").textContent = `${n} chữ`;
+    };
+    document.querySelectorAll("#tab-write textarea[data-wk]").forEach((ta) => {
+      const k = ta.dataset.wk;
+      ta.value = state.drafts[`w${i}-${k}`] || "";
+      ta.oninput = () => {
+        state.drafts[`w${i}-${k}`] = ta.value;
+        state.writeChecked = null;
+        updateCount();
+      };
+    });
+    updateCount();
     $("#start").onclick = toggleTimer;
     $("#reset").onclick = () => {
       stopTimer();
@@ -632,6 +708,14 @@
     if (!li) return;
     ev.preventDefault();
     moveTo(Number(ev.dataTransfer.getData("text/plain")), Number(li.dataset.pos));
+  });
+
+  // Viết theo khung: kiểm tra cấu trúc
+  $("#tab-write").addEventListener("click", (ev) => {
+    if (ev.target.closest("#checkWrite")) {
+      state.writeChecked = checkWriting(state.current);
+      renderWrite();
+    }
   });
 
   // Khởi động
