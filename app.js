@@ -93,7 +93,8 @@
     }).join("");
     const passed = state.essays.filter((e) => rec(e.index).best >= PASS).length;
     const memo = state.essays.filter((e) => rec(e.index).memorized).length;
-    $("#overall").textContent = `Đạt ${passed}/${TOTAL} câu  •  Đã thuộc dàn ý ${memo}/${TOTAL}`;
+    $("#overall").textContent = `Đạt ${passed} trên ${TOTAL} câu. Thuộc dàn ý ${memo} trên ${TOTAL} câu.`;
+    $("#ticks").innerHTML = state.essays.map((e) => `<span class="${rec(e.index).best >= PASS ? "on" : ""}" title="Câu ${e.number}"></span>`).join("");
   }
 
   // ---------- Tab 1: Dàn ý và bài văn ----------
@@ -110,7 +111,7 @@
         <div class="controls">
           <label class="check"><input type="checkbox" id="memo" ${r.memorized ? "checked" : ""}> Tôi đã thuộc dàn ý</label>
           <button class="btn" id="toggleFull">${state.showFull ? "Ẩn bài đầy đủ" : "Xem bài đầy đủ"}</button>
-          <button class="btn primary" id="gotoRecall">Tự kiểm tra câu này →</button>
+          <button class="btn primary" id="gotoRecall">Tự kiểm tra câu này</button>
         </div>
       </div>
       <div class="card essay ${state.showFull ? "" : "hidden"}" id="full">${body}</div>`;
@@ -168,7 +169,8 @@
     saveProgress(progress);
     renderList();
     $("#result").innerHTML = `
-      <p class="score ${ok ? "ok" : "bad"}">${pct}% ý chính ${ok ? "— đạt" : "— chưa đạt"}</p>
+      <p class="score ${ok ? "ok" : "bad"}">${pct}%</p>
+      <p class="meta">Ý chính: ${ok ? "đạt" : "chưa đạt"}, cần ${PASS}% trở lên.</p>
       ${missing.length ? `<h3>Còn thiếu (${missing.length})</h3><ul class="missing">${missing.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
       ${covered.length ? `<h3>Đã có (${covered.length})</h3><ul class="covered">${covered.map((x) => `<li>${esc(x)}</li>`).join("")}</ul>` : ""}
       <div class="controls"><button class="btn" id="showOrig">Xem bài gốc để đối chiếu</button></div>
